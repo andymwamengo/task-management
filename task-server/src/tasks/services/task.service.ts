@@ -64,9 +64,17 @@ export class TaskService {
         return this.taskRepository.findOne(id, {relations: ['user']});
     }
 
-    async updateTask(id: number, 
-        tasksEntity: TasksEntity): Promise<UpdateResult> {
-        return await this.taskRepository.update(id, tasksEntity);
+    async updateTask(id: number,tasksEntity: TasksEntity): Promise<any> {
+        const task = await this.findTaskById(id);
+        if(!task){
+            throw new Error('The task not found');
+        }else{
+            try {
+                return await this.taskRepository.update(id, tasksEntity);
+            } catch (error) {
+                throw new Error('User Update Error',);
+            }
+        }
     }
 
     async deleteTaskById(id: number): Promise<any> {

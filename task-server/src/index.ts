@@ -4,9 +4,9 @@
 
 import "reflect-metadata";
 import * as cors from "cors";
+// import * as helmet from "helmet";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import * as helmet from "helmet";
 import * as cookieParser from "cookie-parser";
 import * as swaggerUi from "swagger-ui-express";
 import { createConnection } from "typeorm";
@@ -29,6 +29,7 @@ export class App {
         this.initializeMiddlewares(middlewares);
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
+        // this.handleCORSErrors();
     }
 
     swaggerDefinitions = {
@@ -75,6 +76,24 @@ export class App {
         });
     }
 
+    // private handleCORSErrors(): any {
+    //     this.app.use((req: any, res: any, next: any) => {
+    //         res.header("Access-Control-Allow-Origin", "*");
+    //         res.header(
+    //             "Access-Control-ALlow-Headers",
+    //             "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    //         );
+    //         if (req.method === "OPTIONS") {
+    //             res.header(
+    //                 "Access-Control-Allow-Methods",
+    //                 "PUT, POST, PATCH, GET, DELETE"
+    //             );
+    //             return res.status(200).json({});
+    //         }
+    //         next(); // send the request to the next middleware
+    //     });
+    //  }
+
     private initializeErrorHandling() {
         this.app.use(errorMiddleware);
     }
@@ -89,6 +108,9 @@ export class App {
 const corsOptions = {
     origin: "http://localhost:4200",
     optionSuccessStatus: 200,
+    // exposedHeaders: "*",
+    // allowedHeaders: "*",
+    // preflightContinue: true,
 };
 
 const logger = new LoggerMiddleware();
@@ -102,7 +124,7 @@ createConnection()
                 bodyParser.json(),
                 bodyParser.urlencoded({ extended: true }),
                 cors(corsOptions),
-                helmet(),
+                // helmet(),
             ],
             [new UserController(), new TaskController(), new AuthControlller()]
         );
@@ -110,5 +132,5 @@ createConnection()
         application.listen();
     })
     .catch((error) => {
-        console.log = logger.loggerMiddleware.error.apply(error);
+        console.log(error);
     });

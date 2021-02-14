@@ -5,6 +5,7 @@
      "module": "commonjs",
      "noImplicitAny": true,
      "alwaysStrict": true,
+     "strict": true,
      "strictNullChecks": true,
      "removeComments": true,
      "noImplicitThis": true,

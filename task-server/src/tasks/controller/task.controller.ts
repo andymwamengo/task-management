@@ -29,7 +29,7 @@ export class TaskController {
 
     private tasksCreate = async ( req: any,
       res: Response, next: NextFunction) => {
-        console.log(res.header, req.user);
+        console.log(res.header);
         const taskDto: CreateTaskDto = req.body;
         try {
           const user = await this.taskService.createTask(taskDto, req.user);
@@ -61,16 +61,14 @@ export class TaskController {
 
     private taskUpdate = async ( req: any, res: Response) => {
       const id: number = +req.params.id;
-      console.log(id)
       const taskDto: TasksEntity = req.body;
       const task = await this.taskService.findTaskById(taskDto.id);
-      console.log(task)
       if(!req.user.email === task.user.email){
-        throw new HttpException(401, 'Your are not authorized');
+        throw new HttpException(401, 'Your are not a legitimate user');
       }
-      const user = await this.taskService.updateTask(id, task,);
-      if (user) {
-        res.status(200).send(user);
+      const taskRes = await this.taskService.updateTask(id, taskDto);
+      if (taskRes) {
+        res.status(200).send(taskRes);
       } else {
         throw new HttpException(400, 'Error Occured while updating task');
       }

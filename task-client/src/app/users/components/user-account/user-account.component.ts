@@ -29,7 +29,6 @@ export class UserAccountComponent implements OnInit {
       this.authService.getAuthStatus().pipe(first()).subscribe(
         (res: UserEntity) => {
           this.user = res;
-          console.log(res);
         },
         error => {
           console.log(error);

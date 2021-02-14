@@ -10,7 +10,9 @@
     <div class="col-sm-12 row flex-wrap">
       <div class="col-sm-9">
         <div class="row d-inline">
-          <div class="float-left"><h5 class="pl-4">{{users.length}} Users</h5> </div>
+          <div class="float-left">
+            <h5 class="pl-4">{{users.length}} Users</h5> 
+          </div>
           <div class="col-sm-1 float-right">
             <div class="bd-highlight">
               <select
@@ -27,16 +29,17 @@
               </select>
             </div>
           </div>
+          <hr />
         </div>
         <div *ngFor="let user of users | paginate: {
               itemsPerPage: pageSize,
               currentPage: page,
               totalItems: count
-            };" class="m-4 p-2">
-          <div class="">
+            };">
+          <div class="container">
             
             <div class="row">
-              <div class="rounded-circle text-light text-center pt-2" 
+              <div class="rounded-circle pt-2 text-light text-center" 
             style="width: 60px; height: 60px;
              background-color: rgb(116, 116, 243);
              font-size: 28px;">

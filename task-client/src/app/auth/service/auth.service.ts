@@ -1,7 +1,7 @@
 /**
  * Auth Service
  */
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -14,6 +14,10 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  headers = new HttpHeaders()
+    .set('Content-Type', 'application/json; charset=utf-8')
+    .append('Accept', 'application/json');
+
   /** The currentUser Subject for user data storage */
   private currentUserSubject: BehaviorSubject<UserEntity>;
   public currentUser: Observable<UserEntity>;
@@ -22,7 +26,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<UserEntity>(
-     JSON.parse(localStorage.getItem('currentUser')));
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -38,7 +43,8 @@ export class AuthService {
         this.currentUserSubject.next(response);
         return response;
       }),
-    shareReplay(1));
+      shareReplay(1)
+    );
   }
 
   /** Logout user from the server and blacklist token */
@@ -50,14 +56,20 @@ export class AuthService {
   }
 
   registerUser(user: UserEntity): Observable<any> {
-    return this.http.post(
-      `${environment.apiUrl}/auth/register`, user).pipe(shareReplay(1));
+    return this.http
+      .post(`${environment.apiUrl}/auth/register`, user, {
+        headers: this.headers,
+      })
+      .pipe(shareReplay(1));
   }
 
-
-  getAuthStatus(): Observable<UserEntity>{
-    return this.http.get<UserEntity>(`
-    ${environment.apiUrl}/auth/status/`).pipe(shareReplay(1));
+  getAuthStatus(): Observable<UserEntity> {
+    return this.http
+      .get<UserEntity>(
+        `
+    ${environment.apiUrl}/auth/status/`
+      )
+      .pipe(shareReplay(1));
   }
 
   updateUser(id: number, params: any): Observable<any> {
@@ -72,7 +84,8 @@ export class AuthService {
           }
           return x;
         }),
-      shareReplay(1));
+        shareReplay(1)
+      );
   }
 
   deleteUser(id: number): Observable<any> {
@@ -84,6 +97,7 @@ export class AuthService {
         }
         return x;
       }),
-    shareReplay(1));
+      shareReplay(1)
+    );
   }
 }

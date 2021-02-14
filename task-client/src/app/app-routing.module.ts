@@ -40,6 +40,7 @@ const routes: Routes = [
   {
     path: 'user/account',
     component: UserAccountComponent,
+    canActivate: [AuthGuard],
     data: { title: 'User Account' },
   },
   {
@@ -69,11 +70,6 @@ const routes: Routes = [
     path: 'task/details/:id',
     component: TaskDetailsComponent,
     data: { title: 'Task Details' },
-  },
-  {
-    path: '',
-    component: TasksComponent,
-    data: { title: 'Tasks Page' },
   },
   {
     path: '',

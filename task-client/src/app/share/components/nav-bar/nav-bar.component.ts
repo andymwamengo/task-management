@@ -4,7 +4,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { UserEntity } from 'src/app/models/user.model';
-import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -15,8 +14,8 @@ import { first } from 'rxjs/operators';
 export class NavBarComponent implements OnInit {
   currentUser!: UserEntity;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.authService.currentUser.pipe(first()).subscribe((res) => {
+  constructor(private authService: AuthService) {
+    this.authService.currentUser.pipe(first()).subscribe(() => {
       this.authService.getAuthStatus().subscribe((user: UserEntity) => {
         this.currentUser = user;
       });

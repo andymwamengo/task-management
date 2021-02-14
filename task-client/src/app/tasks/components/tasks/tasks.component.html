@@ -6,11 +6,37 @@
   <div *ngIf="tasks$ | async as tasks; else loading">
     <div class="col-sm-12 row flex-sm-wrap">
       <div class="col-sm-8 flex-wrap">
+        <div class="row d-inline">
+          <div class="float-left">
+            <h5 class="pl-4">{{tasks.length}} Tasks</h5> 
+          </div>
+          <div class="col-sm-1 float-right">
+            <div class="bd-highlight">
+              <select
+                (change)="onPageSizeChange($event)"
+                class="custom-select"
+                aria-label="data-page-size"
+              >
+                <option
+                  *ngFor="let size of pageSizes"
+                  [ngValue]="size"
+                >
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <hr />
         <div *ngIf="tasks.length > 0">
-          <div *ngFor="let task of tasks">
-            <div>
+          <div *ngFor="let task of tasks | paginate: {
+            itemsPerPage: pageSize,
+            currentPage: page,
+            totalItems: count
+          };">
+            <div class="container">
               <div class="row text-justify">
-                <div class="rounded-circle text-light text-center pt-2" 
+                <div class="rounded-circle text-light pt-2 text-center" 
                 style="width: 50px; height: 50px;
                 background-color: rgb(116, 116, 243);
                 font-size: 24px;">
@@ -26,7 +52,7 @@
                 class="pl-2 text-decoration-none"
                 routerLink="/task/details/{{ task.id }}"
               >
-                details
+                details <i class="fa fa-chevron-down"></i>
               </a>
               </div>
               <div class="">
@@ -41,13 +67,23 @@
             </div>
             <hr />
           </div>
+          <div class="primary-text-color p-1">
+            <pagination-controls
+              [responsive]="true"
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onPageDataChange($event)"
+            >
+            </pagination-controls>
+          </div>
         </div>
         <div *ngIf="tasks.length === 0">
           <div class="container">There is no Tasks Found,</div>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4" style="background-color: rgb(241, 241, 239);">
         <div>
+          <h5>Task can be any task from tasks</h5>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat veniam
           dolores doloribus, libero accusantium consectetur explicabo culpa
           deserunt nulla quis totam cum impedit non aliquam voluptatum, fugit

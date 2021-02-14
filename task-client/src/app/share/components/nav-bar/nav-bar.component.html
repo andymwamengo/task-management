@@ -41,13 +41,14 @@
             <i class="fa fa-search"></i></button>
         </li>
         <li class="nav-item">
-          <div *ngIf="currentUser"  class="rounded-circle text-light text-center pt-1" 
+          <a class="nav-link active" routerLink="/user/account"
+           *ngIf="currentUser"  class="rounded-circle text-light text-center pt-1" 
                 style="width: 40px; height: 40px;
                 background-color: rgb(116, 116, 243);
                 font-size: 20px;">
                 {{ currentUser.firstName | slice:0:1 | uppercase }}{{
                   currentUser.lastName | slice:0:1 | uppercase}}
-              </div>
+          </a>
         <li class="nav-item">
           <button class="btn btn-dark text-light" *ngIf="currentUser" (click)="userLogout()">
             Logout</button>

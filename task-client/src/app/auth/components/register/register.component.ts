@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 
@@ -46,8 +46,7 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
     const user = this.authService.registerUser(this.registerForm.value);
     user.subscribe(
-      (res) => {
-        console.log('User', res);
+      () => {
         this.router.navigate(['/tasks']);
       },
       (error) => {
@@ -56,18 +55,4 @@ export class RegisterComponent implements OnInit {
       }
     );
   }
-
-  // private updateUser() {
-  //   const user = this.authService
-  //     .update(this.id, this.form.value)
-  //     .pipe(first());
-  //   user.subscribe(
-  //     (res) => {
-  //       console.log('User', res);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
 }
