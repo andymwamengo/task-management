@@ -1,0 +1,57 @@
+<div class="users-container">
+    <ng-template #loading>
+      <div class="">Loading user</div>
+    </ng-template>
+  
+    <div *ngIf="user$ | async as user; else loading">
+      <div class="col-sm-12 row flex-sm-wrap">
+        <div class="col-sm-8">
+          <div class="container">
+            <div>
+              <div class="row">
+                <div class="rounded-circle text-light text-center pt-2" 
+              style="width: 60px; height: 60px;
+               background-color: rgb(116, 116, 243);
+               font-size: 28px;">
+                {{ user.firstName | slice:0:1 | uppercase }}{{
+                   user.lastName | slice:0:1 | uppercase}}
+              </div>
+              <div class="p-2">
+                <div>{{ user.firstName }}</div>
+              <div>{{ user.lastName }}</div>
+              <div>{{ user.email }}</div>
+              </div>
+              </div>
+              <div>joined:  {{ user.createdAt | date }}
+                last account update; {{ user.updatedAt | date }}</div>
+              <div class="">
+                Total Tasks Published: {{user.tasks?.length}}
+              </div>
+              <a class="text-decoration-none"
+                routerLink="/users">
+                back
+              </a>
+              <div class="">
+                <h4> Published Tasks </h4>
+                <div *ngFor="let task of user.tasks">
+                  <h6>{{task.name}}</h6>
+                  <div >{{task.description | slice: 0:100}} ..</div>
+                  
+                  <div > 
+                    <a class="text-decoration-none"
+                    routerLink="/task/details/{{ task.id }}">
+                      task details
+                    </a>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,58 @@
+<!-- navbar -->
+
+  <nav class="navbar navbar-expand-lg navbar-expand-md navbar-expand-sm navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" routerLink="">Truebits</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa fa-bars fa-1x" style="color: rgb(66, 65, 65); background-color: aliceblue;"></i>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link active" routerLink="">Home <span class="sr-only">(current)</span></a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/users">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/tasks">Tasks</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            More
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="#">About Us</a>
+            <a class="dropdown-item" routerLink="#">Contact Us</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink="#">Social Networks</a>
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav  ml-auto mr-3">
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="!currentUser" routerLink="/auth/register">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="!currentUser" routerLink="/auth/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-dark text-light" *ngIf="currentUser" (click)="userLogout()">
+            <i class="fa fa-search"></i></button>
+        </li>
+        <li class="nav-item">
+          <div *ngIf="currentUser"  class="rounded-circle text-light text-center pt-1" 
+                style="width: 40px; height: 40px;
+                background-color: rgb(116, 116, 243);
+                font-size: 20px;">
+                {{ currentUser.firstName | slice:0:1 | uppercase }}{{
+                  currentUser.lastName | slice:0:1 | uppercase}}
+              </div>
+        <li class="nav-item">
+          <button class="btn btn-dark text-light" *ngIf="currentUser" (click)="userLogout()">
+            Logout</button>
+        </li>
+        
+      </ul>
+    </div>
+  </nav>

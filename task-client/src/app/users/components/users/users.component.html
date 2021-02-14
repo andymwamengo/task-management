@@ -1,0 +1,103 @@
+<div class="users-container">
+  <ng-template #loading>
+    <div class="text-center">Loading user</div>
+  </ng-template>
+
+  <div *ngIf="users$ | async as users; else loading">
+
+    <div *ngIf="users.length > 0">
+    
+    <div class="col-sm-12 row flex-wrap">
+      <div class="col-sm-9">
+        <div class="row d-inline">
+          <div class="float-left"><h5 class="pl-4">{{users.length}} Users</h5> </div>
+          <div class="col-sm-1 float-right">
+            <div class="bd-highlight">
+              <select
+                (change)="onPageSizeChange($event)"
+                class="custom-select"
+                aria-label="data-page-size"
+              >
+                <option
+                  *ngFor="let size of pageSizes"
+                  [ngValue]="size"
+                >
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let user of users | paginate: {
+              itemsPerPage: pageSize,
+              currentPage: page,
+              totalItems: count
+            };" class="m-4 p-2">
+          <div class="">
+            
+            <div class="row">
+              <div class="rounded-circle text-light text-center pt-2" 
+            style="width: 60px; height: 60px;
+             background-color: rgb(116, 116, 243);
+             font-size: 28px;">
+              {{ user.firstName | slice:0:1 | uppercase }}{{
+                 user.lastName | slice:0:1 | uppercase}}
+            </div>
+            <div class="p-2">
+              <div>{{ user.firstName }}</div>
+            <div>{{ user.lastName }}</div>
+            <div>{{ user.email }}</div>
+            </div>
+            </div>
+            <div>joined:  {{ user.createdAt | date }}
+              last account update; {{ user.updatedAt | date }}</div>
+            <div class="">
+              Total Tasks Published: {{user.tasks?.length}}
+            </div>
+            <div > 
+              <a class="text-decoration-none"
+              routerLink="/user/details/{{ user.id }}">
+                more details
+              </a>
+          </div>
+          </div>
+          <hr />
+        </div>
+        <div class="primary-text-color p-1">
+          <pagination-controls
+            [responsive]="true"
+            previousLabel="Prev"
+            nextLabel="Next"
+            (pageChange)="onPageDataChange($event)"
+          >
+          </pagination-controls>
+        </div>
+      </div>
+      <div class="col-sm-3" style="background-color: rgb(231, 228, 223);">
+        <div class="container">
+          <h5>Listing of the page</h5>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+          cumque illo iure explicabo doloribus numquam quis. Veniam perferendis
+          repudiandae ad fugiat, quae impedit culpa explicabo rem. Eaque
+          temporibus maiores quia? <br />
+
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt sed
+          soluta, ex magni sequi voluptatem, exercitationem cumque perspiciatis
+          quas dolorem dolorum quaerat eos provident aliquam sint minus,
+          consequuntur reiciendis architecto.<br />
+
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt sed
+          soluta, ex magni sequi voluptatem, exercitationem cumque perspiciatis
+          quas dolorem dolorum quaerat eos provident aliquam sint minus,
+          consequuntur reiciendis architecto.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="users.length  === 0">
+    <div class="text-center">
+      There is no user found 
+    </div>
+  </div>
+</div>
+</div>

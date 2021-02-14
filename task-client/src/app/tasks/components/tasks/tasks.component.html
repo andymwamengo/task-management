@@ -1,0 +1,65 @@
+<div class="tasks-container">
+  <ng-template #loading>
+    <div class="text-center">Loading task</div>
+  </ng-template>
+
+  <div *ngIf="tasks$ | async as tasks; else loading">
+    <div class="col-sm-12 row flex-sm-wrap">
+      <div class="col-sm-8 flex-wrap">
+        <div *ngIf="tasks.length > 0">
+          <div *ngFor="let task of tasks">
+            <div>
+              <div class="row text-justify">
+                <div class="rounded-circle text-light text-center pt-2" 
+                style="width: 50px; height: 50px;
+                background-color: rgb(116, 116, 243);
+                font-size: 24px;">
+                {{ task.user.firstName | slice:0:1 | uppercase }}{{
+                  task.user.lastName | slice:0:1 | uppercase}}
+              </div>
+              <div class="p-2">
+                <h4>{{ task.name }}</h4>
+              </div>
+              </div>
+              <div class="text-justify">{{ task.description | slice:0:150}}....
+                <a
+                class="pl-2 text-decoration-none"
+                routerLink="/task/details/{{ task.id }}"
+              >
+                details
+              </a>
+              </div>
+              <div class="">
+                created: {{ task.createdAt }} updated:{{ task.updatedAt }}
+              </div>
+              <div class="font-italic font-weight-bold">
+                <p>
+                  Author => {{ task.user.firstName }} {{ task.user.lastName }}
+                  {{ task.user.email }}
+                </p>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+        <div *ngIf="tasks.length === 0">
+          <div class="container">There is no Tasks Found,</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat veniam
+          dolores doloribus, libero accusantium consectetur explicabo culpa
+          deserunt nulla quis totam cum impedit non aliquam voluptatum, fugit
+          facere ipsum! Nesciunt.
+          <br />
+          <br />
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt ad
+          voluptates numquam quidem quis vel voluptatibus, assumenda nemo quae,
+          eius optio veritatis suscipit voluptate dolore aperiam molestiae
+          corporis sunt quo!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

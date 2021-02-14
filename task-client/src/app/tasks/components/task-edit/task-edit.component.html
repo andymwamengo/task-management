@@ -1,0 +1,39 @@
+<!-- Create Task page -->
+<div class="card col-sm-6 offset-md-3 mt-5">
+    <h4 class="card-header">Update Task</h4>
+    <div class="card-body">
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Task Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+          />
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Task Description</label>
+          <textarea formControlName="description" id="test-content" cols="30" rows="10" 
+          class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
+          </textarea>
+          <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.description.errors.required">Content is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
