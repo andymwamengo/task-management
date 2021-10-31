@@ -1,4 +1,4 @@
-# truebits-task
+# Express Typescript Angular 11 CRUD Application
 
 The Task Management Web Application
 Developed with NodeJs(Express Typescript Typeorm Mysql, JWT) and Angular 11 
