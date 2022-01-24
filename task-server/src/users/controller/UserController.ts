@@ -27,9 +27,8 @@ export class UserController {
       , this.authMiddleware.authUsers, this.userDelete);
     }
 
-  private usersFind = async (request: Request,
-    response: Response, next: NextFunction) => {
-        console.log(request.hostname, next.name);
+  private usersFind = async (_request: Request,
+    response: Response, _next: NextFunction) => {
     const users: UserEntity[] = await this.usersService.getAllUsers();
     response.status(200).send(users);
   };

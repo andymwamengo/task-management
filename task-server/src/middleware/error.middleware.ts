@@ -15,18 +15,10 @@ export class HttpException extends Error {
 }
 
 export const errorMiddleware = (
-    error: HttpException,
-    request: Request,
-    response: Response,
-    next: NextFunction
-) => {
-    console.log(request.hostname, next.name);
+    error: HttpException, _request: Request, response: Response, _next: NextFunction) => {
     const status = error.status || 500;
     const message = error.message || "Something went wrong";
-    response.status(status).send({
-        status,
-        message,
-    });
+    response.status(status).send({ status, message });
 };
 
 export class UserNotFoundException extends HttpException {
@@ -64,7 +56,6 @@ export class CreateAccountException extends HttpException {
         super(400, "Failed to create account, Try again Letter");
     }
 }
-
 
 export class ForbidenException extends HttpException {
     constructor() {

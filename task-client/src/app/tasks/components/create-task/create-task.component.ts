@@ -45,11 +45,10 @@ export class CreateTaskComponent implements OnInit {
     this.loading = true;
     const task = this.taskService.createTask(this.taskForm.value).pipe(first());
     task.subscribe(
-      (res) => {
+      (_res) => {
         this.router.navigate(['/user/account']);
       },
-      (error) => {
-        console.log(error);
+      (_error) => {
       }
     );
   }
@@ -60,10 +59,8 @@ export class CreateTaskComponent implements OnInit {
   //     .pipe(first());
   //   task.subscribe(
   //     (res) => {
-  //       console.log('task', res);
   //     },
   //     (error) => {
-  //       console.log(error);
   //     }
   //   );
   // }

@@ -29,7 +29,6 @@ export class TaskController {
 
     private tasksCreate = async ( req: any,
       res: Response, next: NextFunction) => {
-        console.log(res.header);
         const taskDto: CreateTaskDto = req.body;
         try {
           const user = await this.taskService.createTask(taskDto, req.user);
@@ -39,9 +38,8 @@ export class TaskController {
         }
       }
     
-    private taskFind = async ( req: any,
-      res: Response, next: NextFunction) => {
-        console.log(req.hostname, next.name);
+    private taskFind = async ( _req: any,
+      res: Response, _next: NextFunction) => {
        const task: TasksEntity[] = await this.taskService.getAllTasks();
        res.status(200).send(task)
       }

@@ -39,8 +39,7 @@ export class TaskEditComponent implements OnInit {
       (res: TaskEntity) => {
         this.taskForm.patchValue(res);
       },
-      (error) => {
-        console.log(error);
+      (_error) => {
       }
     );
   }
@@ -59,8 +58,7 @@ export class TaskEditComponent implements OnInit {
     }
     if (this.taskForm.valid) {
       this.taskService.updateTask(this.taskId, this.taskForm.value).pipe(first()).subscribe(
-        (res: any) => {
-          console.log(res);
+        (_res: any) => {
           this.route.navigate(['/user/account']);
         },
         (error: any) => {

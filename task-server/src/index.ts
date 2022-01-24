@@ -76,23 +76,23 @@ export class App {
         });
     }
 
-    // private handleCORSErrors(): any {
-    //     this.app.use((req: any, res: any, next: any) => {
-    //         res.header("Access-Control-Allow-Origin", "*");
-    //         res.header(
-    //             "Access-Control-ALlow-Headers",
-    //             "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    //         );
-    //         if (req.method === "OPTIONS") {
-    //             res.header(
-    //                 "Access-Control-Allow-Methods",
-    //                 "PUT, POST, PATCH, GET, DELETE"
-    //             );
-    //             return res.status(200).json({});
-    //         }
-    //         next(); // send the request to the next middleware
-    //     });
-    //  }
+    private handleCORSErrors(): any {
+        this.app.use((req: any, res: any, next: any) => {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header(
+                "Access-Control-ALlow-Headers",
+                "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+            );
+            if (req.method === "OPTIONS") {
+                res.header(
+                    "Access-Control-Allow-Methods",
+                    "PUT, POST, PATCH, GET, DELETE"
+                );
+                return res.status(200).json({});
+            }
+            next();
+        });
+     }
 
     private initializeErrorHandling() {
         this.app.use(errorMiddleware);
@@ -108,29 +108,25 @@ export class App {
 const corsOptions = {
     origin: "http://localhost:4200",
     optionSuccessStatus: 200,
-    // exposedHeaders: "*",
-    // allowedHeaders: "*",
-    // preflightContinue: true,
 };
 
 const logger = new LoggerMiddleware();
 
-createConnection()
-    .then(async () => {
-        const application = new App(
-            3000,
-            [
-                cookieParser(),
-                bodyParser.json(),
-                bodyParser.urlencoded({ extended: true }),
-                cors(corsOptions),
-                // helmet(),
-            ],
-            [new UserController(), new TaskController(), new AuthControlller()]
-        );
-
-        application.listen();
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+createConnection().then(async () => {
+    const application = new App(3000,
+        [
+            cookieParser(),
+            bodyParser.json(),
+            bodyParser.urlencoded({ extended: true }),
+            cors(corsOptions),
+            // helmet(),
+        ],
+        [
+            new UserController(),
+            new TaskController(),
+            new AuthControlller()]
+    );
+    application.listen();
+}).catch((_error) => {
+}
+);

@@ -43,7 +43,6 @@ export class UserEditComponent implements OnInit {
         this.editAccountForm.patchValue(res);
       },
       (error) => {
-        console.log(error);
       }
     );
   }

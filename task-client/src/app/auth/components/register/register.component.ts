@@ -50,7 +50,6 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/tasks']);
       },
       (error) => {
-        console.log(error);
         this.error = error;
       }
     );

@@ -30,8 +30,7 @@ export class UserAccountComponent implements OnInit {
         (res: UserEntity) => {
           this.user = res;
         },
-        error => {
-          console.log(error);
+        _error => {
         }
       );
     }else{
@@ -42,11 +41,9 @@ export class UserAccountComponent implements OnInit {
   deleteUserAccount(user: UserEntity): void {
     const userd = this.authService.deleteUser(user.id).pipe(first());
     userd.subscribe(
-      (res) => {
-        console.log(res);
+      (_res) => {
       },
-      (error) => {
-        console.log(error);
+      (_error) => {
       }
     );
   }
@@ -55,11 +52,9 @@ export class UserAccountComponent implements OnInit {
   deleteTask(task: TaskEntity): void{
     const taskd = this.taskService.deleteTask(task.id).pipe(first());
     taskd.subscribe(
-      res => {
-        console.log(res);
+      _res => {
       },
-      error => {
-        console.log(error);
+      _error => {
       }
     );
   }
